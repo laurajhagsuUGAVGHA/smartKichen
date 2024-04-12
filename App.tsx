@@ -1,13 +1,68 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Platform, StatusBar, ScrollView, ActivityIndicator, Alert, Keyboard } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useState } from 'react'
+import { useState } from 'react';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+
+import ViagensScreen from './viagens';
+import LivrosScreen from './livros';
+import LojaScreen from './loja';
 
 
-const alturaStatusBar = StatusBar.currentHeight;
+const Tab = createMaterialBottomTabNavigator();
+
+
+const alturaStatusBar = StatusBar.currentHeight
 const KEY_GPT = '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';
 
-
 export default function App() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen 
+          name="Receita" 
+          component={Receita} 
+          options={{
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="restaurant" size={24} color="black" />
+            )
+          }} 
+        />
+        <Tab.Screen 
+          name="Viagens" 
+          component={ViagensScreen} 
+          options={{
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="flight" color={color} size={24} />
+            )
+          }} 
+        />
+        <Tab.Screen 
+          name="Livros" 
+          component={LivrosScreen} 
+          options={{
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="book" color={color} size={24} />
+            )
+          }} 
+        />
+        <Tab.Screen 
+          name="Loja de Roupa" 
+          component={LojaScreen} 
+          options={{
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="checkroom" size={24} color="black" />
+            )
+          }} 
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
+
+
+
+function Receita() {
 
   const [load, defLoad] = useState(false);
   const [receita, defReceita] = useState("");
@@ -103,7 +158,7 @@ export default function App() {
 
       <TouchableOpacity style={ESTILOS.button} onPress={gerarReceita}>
         <Text style={ESTILOS.buttonText}>Gerar receita</Text>
-        <MaterialIcons name="travel-explore" size={24} color="#FFF" />
+        <MaterialIcons name="restaurant" size={24} color="#FFF" />
       </TouchableOpacity>
 
       <ScrollView contentContainerStyle={{ paddingBottom: 24, marginTop: 4, }} style={ESTILOS.containerScroll} showsVerticalScrollIndicator={false} >
